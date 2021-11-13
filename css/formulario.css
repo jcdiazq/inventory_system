@@ -1,0 +1,51 @@
+
+.table_formulario tr td input {
+    border-radius: 10px;
+    color: rgb(3, 0, 172);
+    font-family: 'Courier New', Courier, monospace;
+    border-style: solid;
+    border-width: 10px;
+}
+
+.table_formulario tr td input:hover {
+    border-color: green;
+}
+
+.table_formulario tr td {
+    font-family: Arial, Helvetica, sans-serif;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+h2 {
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+
+.boton_fomulario input{
+    color: white;
+    /* background-color: rgba(0, 0, 202, 0.61); */
+    /* border-color: rgba(0, 0, 202, 0.61); */
+    border-style: solid;
+    border-width: 1px;
+    font-size: 30px;
+}
+
+.boton_fomulario input:hover{
+    background-color:green;
+}
+
+.contenido_formulario {
+    position: relative;
+    border-width: 1%;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: black;
+    width: 50%;
+    height: 60%;
+    margin-left: 25%;
+}
