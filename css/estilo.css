@@ -1,19 +1,25 @@
 /* body cuerpo de página */
 body {
     background-color: aliceblue;
+    display: flex;
+    justify-content: center;
 }
 
+/* contenido */
+.cuerpo {
+    position: relative;
+    width: 90%;
+}
 
 /* encabezado titulo */
 .encabezado {
     position: relative;
     border-style: solid;
     border-width: 2px;
-    width: 90%;
     height: 250px;
     border-radius: 10px;
     border-width: 1px;
-    margin-left: 5%;
+    /* margin-left: 5%; */
 }
 
 .encabezado_titulo_logo {
@@ -103,4 +109,13 @@ body {
 
 .navegacion .transaccion .opciones ul:hover {
     text-shadow: 2px 2px rgb(70, 113, 255);
+}
+
+.contenido {
+    position: relative;
+    color: black;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
 }

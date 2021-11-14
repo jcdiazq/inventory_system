@@ -8,7 +8,8 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- Encabezado -->
+    <div class="cuerpo">
+           <!-- Encabezado -->
     <div class="encabezado">
         <div class="encabezado_titulo_logo">
             <div class="titulo">
@@ -33,6 +34,14 @@
             </div>
         </div>
     </div>
-    <!-- Cuerpo -->
+    <!-- contenido -->
+    <div class="contenido">
+        <span>
+            spam
+        </span>
+        contenido
+        <input type="text" name="input"/>
+    </div>
+    </div>
 </body>
 </html>
