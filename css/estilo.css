@@ -19,7 +19,6 @@ body {
     height: 250px;
     border-radius: 10px;
     border-width: 1px;
-    /* margin-left: 5%; */
 }
 
 .encabezado_titulo_logo {
@@ -116,6 +115,7 @@ body {
     color: black;
     height: auto;
     display: flex;
+    overflow: hidden;
     justify-content: center;
     margin-top: 1%;
 }

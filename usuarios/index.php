@@ -11,7 +11,7 @@ if(isset($_POST["crearusuario"])){
     $resultado->execute(array( ":ide"=>$_POST["numero"],":tipodoc"=>$_POST["documento"],":nom"=>$_POST["nombre"],
     ":ape"=>$_POST["apellido"],":dir"=>$_POST["direccion"],":teluno"=>$_POST["telefono1"],":teldos"=>$_POST["telefono2"],
     ":movil"=>$_POST["movil"],":usuari"=>$_POST["usuario"],":contras"=>$_POST["clave"],":rol"=>$_POST["rol"]));
-    $registro = true;
+    $mensaje = "Usuario Registrado Ok";
 
 }
 
@@ -86,6 +86,6 @@ $registros = $conexion->query("SELECT * FROM roles")->fetchAll(PDO::FETCH_OBJ);
             </table>
             </form>
         </div>
-        <?php If ($resultado) { echo "Usuario Registrado Ok";} ?>
     </div>
+    <script><?php If(isset($mensaje)) {echo "alert('".$mensaje."');";} ?></script>
 <?php include("../principal/abajo.php"); ?>
