@@ -21,29 +21,29 @@
                 <span class="titulo_texto">Sistema de Inventarios</span>
             </div>
             <div class="logo">
-                <img src="../img/distribuidora.png" alt="">
+                <img src="../img/distribuidora.png">
             </div>
         </div>
         <!-- Menu Navegación-->
         <div class="navegacion">
             <div id="menu">
             <ul>
-                <li class="nivel1"><a href="/">Inicio</a>
+                <li class="nivel1"><a class="opcion_inicio" href="/">Inicio</a>
                     <ul class="nivel2">
-                        <li class="nivel2"><a href="#">Clientes</a>
+                        <li class="nivel2"><a href="#"><img src="../img/cliente.png"><br>Clientes</a>
                             <ul class="nivel3">
                                 <li><a href="/clientes">Crear Cliente</a></li>
                                 <li><a href="/clientes/listar.php">Listar Clientes</a></li>
                             </ul>
                         </li>
-                        <li class="nivel2"><a href="#">Pedidos/Ventas</a>
+                        <li class="nivel2"><a href="#"><img src="../img/ventas.png"><br>Pedidos/Ventas</a>
                             <ul class="nivel3">
                                 <li><a href="#">Pedidos</a></li>
                                 <li><a href="#">Ventas</a></li>
                             </ul>
                         </li>
-                        <li><a href="/devolucion/listar.php">Devolución</a></li>
-                        <li><a href="/inventario/listar.php">Inventarios</a></li>
+                        <li><a href="/devolucion/listar.php"><img src="../img/devolucion.png"><br>Devolución</a></li>
+                        <li><a href="/inventario/listar.php"><img src="../img/inventario.png"><br>Inventarios</a></li>
                     </ul>
                 </li>
                 <li class="nivel1">Usuario

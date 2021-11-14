@@ -15,19 +15,32 @@
 
 #menu ul li {
 	width: 162px;
+    opacity: .95;
 }
 
-#menu ul li a {
+.opcion_inicio {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#menu a img {
+    width: 75px;
+    height: 75px;
+    margin-left: 20%;
+}
+
+#menu ul li a:not(.opcion_inicio) {
 	display: block;
 	text-decoration: none;
-	color: #fff;
-	background-color: rgba(59,93,148,1);
+	color: rgb(15, 15, 59);
+	background-color: rgb(255, 255, 255);
 	border: solid 1px #fff;
 	padding: 8px;
 	position: relative;
+    font-size: .5em;
 }
 
-#menu ul li ul li a {
+#menu ul li ul li a:not(.opcion_inicio) {
 	width: 160px;
 	padding: 8px 0px;
 	border-top-color: transparent;
@@ -65,7 +78,7 @@
 }
 
 #menu ul li a:hover, #menu ul li:hover a.nivel1 {
-	background-color: #6CC;
+	background-color: #fff;
 	color: #000;
 	position: relative;
 }
