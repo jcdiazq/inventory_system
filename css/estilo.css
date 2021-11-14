@@ -1,3 +1,9 @@
+* {
+    margin: 0px;
+	padding: 0px; 
+	outline: 0;
+}
+
 /* body cuerpo de página */
 body {
     background-color: aliceblue;
@@ -9,6 +15,7 @@ body {
 .cuerpo {
     position: relative;
     width: 90%;
+    margin-top: 2%;
 }
 
 /* encabezado titulo */
@@ -109,6 +116,16 @@ body {
 .navegacion .transaccion .opciones ul:hover {
     text-shadow: 2px 2px rgb(70, 113, 255);
 }
+
+.opcion_inicio li, .opcion_inicio ul {
+    
+}
+
+.opcion_inicio li:hover, .opcion_inicio ul:hover{
+    display: none;
+}
+
+/* Div de Contenido  */
 
 .contenido {
     position: relative;

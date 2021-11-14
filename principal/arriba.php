@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/formulario.css">
     <link rel="stylesheet" href="../css/estilo.css">
     <link rel="stylesheet" href="../css/listado.css">
+    <link rel="stylesheet" href="../css/menu.css">
     <title>Sistema de Inventarios</title>
 </head>
 <body>
@@ -25,17 +26,57 @@
         </div>
         <!-- Menu Navegación-->
         <div class="navegacion">
-            <!-- menu izquierda -->
-            <div class="transaccion">
+            <div id="menu">
+            <ul>
+                <li class="nivel1"><a href="/">Inicio</a>
+                    <ul class="nivel2">
+                        <li class="nivel2"><a href="#">Clientes</a>
+                            <ul class="nivel3">
+                                <li><a href="/clientes">Crear Cliente</a></li>
+                                <li><a href="/clientes/listar.php">Listar Clientes</a></li>
+                            </ul>
+                        </li>
+                        <li class="nivel2"><a href="#">Pedidos/Ventas</a>
+                            <ul class="nivel3">
+                                <li><a href="#">Pedidos</a></li>
+                                <li><a href="#">Ventas</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/devolucion/listar.php">Devolución</a></li>
+                        <li><a href="/inventario/listar.php">Inventarios</a></li>
+                    </ul>
+                </li>
+                <li class="nivel1">Usuario
+                    <ul class="nivel2">
+                        <li><a href="/usuarios">Crear Usuario</a></li>
+                        <li><a href="/usuarios/listar.php">Listar Usuarios</a></li>
+                    </ul>
+                </li>
+            </ul>
+            </div>
+            <!-- <div class="transaccion">
                 <nav class="opciones">
-                    <ul>Inicio</ul>
-                    <ul>Usuario</ul>
+                    <ul class="opcion_inicio">Inicio
+                        <li>Clientes
+                            <ul>Crear Cliente</ul>
+                            <ul>Listar Clientes</ul>
+                        </li>
+                        <li>Pedidos/Ventas
+                            <ul>Pedidos</ul>
+                            <ul>Ventas</ul>
+                        </li>
+                        <li>Devolución</li>
+                        <li>Inventarios</li>
+                    </ul>
+                    <ul>Usuario
+                        <li>Crear Usuario</li>
+                        <li>Listar Usuarios</li>
+                    </ul>
                 </nav>
             </div>
-            <!-- menu derecha -->
             <div class="sesion">
                 <nav><ul>Cerrar</ul></nav>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Contenido -->
