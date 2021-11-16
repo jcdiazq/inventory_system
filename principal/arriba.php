@@ -42,41 +42,32 @@
                                 <li><a href="#">Ventas</a></li>
                             </ul>
                         </li>
-                        <li><a href="/devolucion/listar.php"><img src="../img/devolucion.png"><br>Devolución</a></li>
-                        <li><a href="/inventario/listar.php"><img src="../img/inventario.png"><br>Inventarios</a></li>
+                        <li class="nivel2"><a href="#"><img src="../img/devolucion.png"><br>Devolución</a>
+                            <ul class="nivel3">
+                                <li><a href="/devolucion">Crear Devolución</a></li>
+                                <li><a href="/devolucion/listar.php">Listar Devoluciones</a></li>
+                            </ul>
+                        </li>
+                        <li class="nivel2"><a href="#"><img src="../img/inventario.png"><br>Inventarios</a>
+                        <ul class="nivel3">
+                            <li><a href="/inventario">Crear Inventarios</a></li>
+                            <li><a href="/inventario/listar.php">Listar Inventarios</a></li>
+                        </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="nivel1">Usuario
                     <ul class="nivel2">
                         <li><a href="/usuarios">Crear Usuario</a></li>
                         <li><a href="/usuarios/listar.php">Listar Usuarios</a></li>
+                        <li><a href="/usuarios/cambiarclave.php">Cambio de Contraseña</a></li>
                     </ul>
                 </li>
             </ul>
             </div>
-            <!-- <div class="transaccion">
-                <nav class="opciones">
-                    <ul class="opcion_inicio">Inicio
-                        <li>Clientes
-                            <ul>Crear Cliente</ul>
-                            <ul>Listar Clientes</ul>
-                        </li>
-                        <li>Pedidos/Ventas
-                            <ul>Pedidos</ul>
-                            <ul>Ventas</ul>
-                        </li>
-                        <li>Devolución</li>
-                        <li>Inventarios</li>
-                    </ul>
-                    <ul>Usuario
-                        <li>Crear Usuario</li>
-                        <li>Listar Usuarios</li>
-                    </ul>
-                </nav>
-            </div>
             <div class="sesion">
                 <nav><ul>Cerrar</ul></nav>
-            </div> -->
+            </div>
         </div>
     </div>
     <!-- Contenido -->

@@ -30,3 +30,28 @@
     overflow: scroll;
     height: 300px;
 }
+
+.iconos_exportar {
+    display: flex;
+    flex-direction: row;
+}
+
+.iconos_exportar div {
+    padding: 2px 3px 2px 3px;
+}
+
+.iconos_exportar img {
+    width: 30px;
+    height: 30px;
+}
+
+.caja_filtro {
+    border-style: solid;
+    border-width: 1px;
+    width: 99%;
+    height: 50px;
+    margin-bottom: 3px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

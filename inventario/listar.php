@@ -31,6 +31,23 @@ $registros = $conexion->query("select * FROM inventario")->fetchAll(PDO::FETCH_O
     <div class=titulo_pagina>
         <h1>Lista de Inventario</h1>
     </div>
+    <div>
+        <div class="caja_filtro">
+            <form action="" method="get">
+                Filtrar Por: <select name="filtro" id="filtro">
+                                <option value="filtro1">Filtro 1</option>
+                                <option value="filtro2">Filtro 2</option>
+                            </select>
+                <input type="submit" name="filtrar" value="Aceptar">
+            </form>
+        </div>
+        <div class="iconos_exportar">
+            <div><img src="../img/icono_excel.png"></div>
+            <div><img src="../img/icono_pdf.png"></div>
+            <div><img src="../img/icono_imprimir.png"></div>
+            <div><img src="../img/icono_correo.png"></div>
+        </div>
+    </div>
     <div class=registros>
         <table class="tabla_lista">
             <thead class="tabla_encabezado">
