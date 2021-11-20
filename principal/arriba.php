@@ -55,12 +55,16 @@
                                 <li><a href="/proveedores/listar.php">Listar Proveedores</a></li>
                             </ul>
                         </li>
+                        <li class="nivel2"><a href="#"><img src="../img/compras.png"><br>Compras</a>
+                            <ul class="nivel3">
+                                <li><a href="/compras">Crear Compra</a></li>
+                                <li><a href="/compras/listar.php">Listar Compras</a></li>
+                            </ul>
+                        </li>
                         <li class="nivel2"><a href="#"><img src="../img/ventas.png"><br>Pedidos/Ventas</a>
                             <ul class="nivel3">
                                 <li><a href="#">Crear Pedido</a></li>
                                 <li><a href="#">Listar Pedidos</a></li>
-                                <li><a href="#">Crear Venta</a></li>
-                                <li><a href="#">Listar Ventas</a></li>
                             </ul>
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/devolucion.png"><br>Devolución</a>
@@ -70,10 +74,16 @@
                             </ul>
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/inventario.png"><br>Inventarios</a>
-                        <ul class="nivel3">
-                            <li><a href="/inventario">Crear Inventarios</a></li>
-                            <li><a href="/inventario/listar.php">Listar Inventarios</a></li>
-                        </ul>
+                            <ul class="nivel3">
+                                <li><a href="/inventario">Crear Inventarios</a></li>
+                                <li><a href="/inventario/listar.php">Listar Inventarios</a></li>
+                            </ul>
+                        </li>
+                        <li class="nivel2"><a href="#"><img src="../img/materiales.png"><br>Materiales</a>
+                            <ul class="nivel3">
+                                <li><a href="/materiales">Crear Material</a></li>
+                                <li><a href="/materiales/listar.php">Listar Materiales</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
