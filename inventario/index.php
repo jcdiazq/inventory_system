@@ -3,8 +3,8 @@
 include("../principal/arriba.php");
 
 if(isset($_POST["crearusuario"])){
-    $sql="INSERT INTO usuarios
-    (ID, TIPO_DOC, NOMBRES, APELLIDOS, DIRECCION, TELEFONO1, TELEFONO2, MOVIL, USUARIO, CONTRASEÑA, ID_ROL)
+    $sql="INSERT INTO inventarios.inventario
+    (ID, N_COMPRAS, N_PEDIDO, N_DEVOLUCION, CODIGO, DESCRIPCION, COLOR, MARCA, REFERENCIA, GARANTIA, CANT_DISPONIBLE)
     VALUES(:ide,:tipodoc,:nom,:ape,:dir,:teluno,:teldos,:movil,:usuari,:contras,:rol)";
 
     $resultado=$conexion->prepare($sql);
