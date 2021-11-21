@@ -27,7 +27,7 @@ $usuarios = $conexion->query("SELECT * FROM usuarios")->fetchAll(PDO::FETCH_OBJ)
                 <table class="table_formulario">
                     <tr>
                         <td>Código DV</td>
-                        <td><input type="number" name="DV"></td>
+                        <td><input type="number" name="DV" min="0"></td>
                     </tr>
                     <tr>
                         <td>Tipo Documento</td>

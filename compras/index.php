@@ -12,6 +12,26 @@ if(isset($_POST["crear"])){
     ":CODIGO_BARRAS"=>$_POST["CODIGO_BARRAS"],":DESCRIPCION"=>$_POST["DESCRIPCION"],":COLOR"=>$_POST["COLOR"],":MARCA"=>$_POST["MARCA"],
     ":REFERENCIA"=>$_POST["REFERENCIA"],":GARANTIA"=>$_POST["GARANTIA"],":CANTIDAD"=>$_POST["CANTIDAD"],":V_UNITARIO"=>$_POST["V_UNITARIO"],
     ":TOTAL"=>$_POST["TOTAL"]));
+
+    $id = $conexion->lastInsertId();
+    $compras = $conexion->query("select * FROM compras WHERE ID=$id")->fetch(PDO::FETCH_OBJ);
+    $inventario = $conexion->query("select * FROM inventario WHERE N_COMPRAS=$id")->fetch(PDO::FETCH_OBJ);
+
+    if (isset($id) && isset($compras->CANTIDAD) && isset($inventario->CANT_DISPONIBLE)){
+        $cantidad_disponible = $compras->CANTIDAD + $inventario->CANT_DISPONIBLE;
+        $sql = "UPDATE inventario SET CANT_DISPONIBLE={$cantidad_disponible} WHERE N_COMPRAS='{$id}'";
+        $resultado = $conexion->prepare($sql);
+        $resultado->execute();
+    } elseif (isset($id) && isset($compras->CANTIDAD)) {
+        $sql="INSERT INTO inventarios.inventario
+        (N_COMPRAS, CODIGO, DESCRIPCION, COLOR, MARCA, REFERENCIA, GARANTIA, CANT_DISPONIBLE)
+        VALUES(:N_COMPRAS,:CODIGO ,:DESCRIPCION,:COLOR,:MARCA,:REFERENCIA,:GARANTIA,:CANT_DISPONIBLE)";
+
+        $resultado=$conexion->prepare($sql);
+        $resultado->execute(array( ":N_COMPRAS"=>$id,":CODIGO"=>$_POST["CODIGO"],":DESCRIPCION"=>$_POST["DESCRIPCION"],":COLOR"=>$_POST["COLOR"],":MARCA"=>$_POST["MARCA"],
+        ":REFERENCIA"=>$_POST["REFERENCIA"],":GARANTIA"=>$_POST["GARANTIA"],":CANT_DISPONIBLE"=>$_POST["CANTIDAD"]));
+    }
+
     $mensaje = "Registrado Ok";
 }
 
@@ -76,15 +96,15 @@ $proveedores = $conexion->query("SELECT * FROM proveedores")->fetchAll(PDO::FETC
                     </tr>
                     <tr>
                         <td>Cantidad</td>
-                        <td><input type="number" name="CANTIDAD" id="cantidad" value="0" required></td>
+                        <td><input type="number" name="CANTIDAD" id="cantidad" value="1" min="1" required></td>
                     </tr>
                     <tr>
                         <td>Valor Unitario</td>
-                        <td><input type="number" name="V_UNITARIO" id="unitario" value="0" required></td>
+                        <td><input type="number" name="V_UNITARIO" id="unitario" value="1" min="1" required></td>
                     </tr>
                     <tr>
                         <td>Valor Total</td>
-                        <td><input type="number" name="TOTAL" id="total" value="0" readonly></td>
+                        <td><input type="number" name="TOTAL" id="total" value="1" readonly></td>
                     </tr>
         </div>
         <div>

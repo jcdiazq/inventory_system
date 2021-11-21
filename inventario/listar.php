@@ -11,21 +11,23 @@ if (isset($_GET["ID"])) {
     $arrayField = array();
     foreach ($campos as $campo) :
         if (!empty($_POST["$campo->Field"]) && $campo->Field != "ID") {
-            if (strpos($campo->Type,'int')){
-                $arrayField[] = $campo->Field . "=" . $_POST["$campo->Field"];
-            } else {
-                $arrayField[] = $campo->Field . "='" . $_POST["$campo->Field"] . "'";
-            }
+            $arrayField[] = $campo->Field . "=" . $_POST["$campo->Field"];
         }
     endforeach;
+
     $dataSet = implode(",", ($arrayField));
-    $sql = "UPDATE inventario SET $dataSet WHERE ID='{$_POST["ID"]}'";
+    $sql = "UPDATE inventario SET $dataSet WHERE ID={$_POST["ID"]}";
     $resultado = $conexion->prepare($sql);
     $resultado->execute();
     $mensaje = "Actualizado OK";
 }
 
 $registros = $conexion->query("select * FROM inventario")->fetchAll(PDO::FETCH_OBJ);
+$compras = $conexion->query("select * FROM compras")->fetchAll(PDO::FETCH_OBJ);
+$pedidos = $conexion->query("select * FROM pedidos")->fetchAll(PDO::FETCH_OBJ);
+$devoluciones = $conexion->query("select * FROM devolucion")->fetchAll(PDO::FETCH_OBJ);
+$materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_OBJ);
+
 ?>
 <div class="contenedor_listado">
     <div class=titulo_pagina>
@@ -64,11 +66,45 @@ $registros = $conexion->query("select * FROM inventario")->fetchAll(PDO::FETCH_O
                         <tr class="tabla_fila">
                             <?PHP foreach ($registro as $llave => $dato) : ?>
                                 <th>
-                                    <?php if ($llave == "ID") { ?>
-                                        <?php echo $dato;
-                                        $valor = $dato ?>
+                                    <?php if ($llave == "N_COMPRAS") { ?>
+                                        <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
+                                            <option value="NULL">NULL</option>
+                                            <?PHP foreach ($compras as $compra) : ?>
+                                                <option value="<?php echo $compra->ID; ?>" <?php if ($dato == $compra->ID) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $compra->DESCRIPCION; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php } elseif ($llave == "N_PEDIDO") { ?>
+                                        <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
+                                            <option value="NULL">NULL</option>
+                                            <?PHP foreach ($pedidos as $pedido) : ?>
+                                                <option value="<?php echo $pedido->ID; ?>" <?php if ($dato == $pedido->ID) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $pedido->DESCRIPCION; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php } elseif ($llave == "N_DEVOLUCION") { ?>
+                                        <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
+                                            <option value="NULL">NULL</option>
+                                            <?PHP foreach ($devoluciones as $devolucion) : ?>
+                                                <option value="<?php echo $devolucion->ID; ?>" <?php if ($dato == $devolucion->ID) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $devolucion->DESCRIPCION; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php } elseif ($llave == "CODIGO") { ?>
+                                        <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
+                                            <option value="NULL">NULL</option>
+                                            <?PHP foreach ($materiales as $material) : ?>
+                                                <option value="<?php echo $material->IDMATERIAL; ?>" <?php if ($dato == $material->IDMATERIAL) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $material->DESCRIPCION; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     <?php } else { ?>
-                                        <input type="text" name="<?php echo $llave; ?>" value="<?php echo $dato; ?>">
+                                        <?php if ($llave == "ID") {$valor = $dato;} ?>
+                                        <?php echo $dato; ?>
                                     <?php } ?>
                                 </th>
                             <?php endforeach; ?>

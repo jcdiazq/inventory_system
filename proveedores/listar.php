@@ -62,6 +62,7 @@ $usuarios = $conexion->query("select * FROM usuarios")->fetchAll(PDO::FETCH_OBJ)
                                                                                             echo "selected";
                                                                                         } ?>><?php echo $usuario->NOMBRES; ?></option>
                                             <?php endforeach; ?>
+                                        </select>
                                     <?php } else { ?>
                                         <input type="<?php echo $tipodato; ?>" name="<?php echo $llave; ?>" value="<?php echo $dato; ?>">
                                     <?php } ?>
