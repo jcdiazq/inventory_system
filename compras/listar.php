@@ -12,15 +12,15 @@ if (isset($_GET["ID"])) {
     $arrayField = array();
     foreach ($campos as $campo) :
         if (!empty($_POST["$campo->Field"]) && $campo->Field != "ID") {
-            if (strpos($campo->Type,'date')) {
+            if (strpos($campo->Type, 'date')) {
                 $arrayField[] = $campo->Field . "='" . $_POST["$campo->Field"] . "'";
-                $tipodato="date";
-            } elseif (strpos($campo->Type,'int') || strpos($campo->Type,'decimal')){ 
+                $tipodato = "date";
+            } elseif (strpos($campo->Type, 'int') || strpos($campo->Type, 'decimal')) {
                 $arrayField[] = $campo->Field . "=" . $_POST["$campo->Field"];
-                $tipodato="number";
+                $tipodato = "number";
             } else {
                 $arrayField[] = $campo->Field . "='" . $_POST["$campo->Field"] . "'";
-                $tipodato="text";
+                $tipodato = "text";
             }
         }
     endforeach;
@@ -34,6 +34,7 @@ if (isset($_GET["ID"])) {
 $registros = $conexion->query("select * FROM compras")->fetchAll(PDO::FETCH_OBJ);
 $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_OBJ);
 $proveedores = $conexion->query("select * FROM proveedores")->fetchAll(PDO::FETCH_OBJ);
+$contador = 1;
 
 ?>
 <div class="contenedor_listado">
@@ -63,19 +64,39 @@ $proveedores = $conexion->query("select * FROM proveedores")->fetchAll(PDO::FETC
                                         <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
                                             <?PHP foreach ($proveedores as $proveedor) : ?>
                                                 <option value="<?php echo $proveedor->ID ?>" <?php if ($dato == $proveedor->ID) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $proveedor->RAZON_SOCIAL ?></option>
+                                                                                                    echo "selected";
+                                                                                                } ?>><?php echo $proveedor->RAZON_SOCIAL ?></option>
                                             <?php endforeach; ?>
-                                    <?php } elseif ($llave == "CODIGO") { ?>
-                                        <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
-                                            <?PHP foreach ($materiales as $material) : ?>
-                                                <option value="<?php echo $material->IDMATERIAL ?>" <?php if ($dato == $material->IDMATERIAL) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $material->DESCRIPCION ?></option>
-                                            <?php endforeach; ?>
-                                    <?php } else { ?>
-                                        <input type="<?php echo $tipodato; ?>" name="<?php echo $llave; ?>" value="<?php echo $dato; ?>">
-                                    <?php } ?>
+                                        <?php } elseif ($llave == "CODIGO") { ?>
+                                            <select name="<?php echo $llave; ?>" id="<?php echo $llave; ?>" style="width: 300px;">
+                                                <?PHP foreach ($materiales as $material) : ?>
+                                                    <option value="<?php echo $material->IDMATERIAL ?>" <?php if ($dato == $material->IDMATERIAL) {
+                                                                                                            echo "selected";
+                                                                                                        } ?>><?php echo $material->DESCRIPCION ?></option>
+                                                <?php endforeach; ?>
+                                            <?php } elseif ($llave == "TOTAL") { ?>
+                                                <input type="<?php echo $tipodato; ?>" id="total<?php echo $contador; ?>" name="<?php echo $llave; ?>" value="<?php echo $dato; ?>" readonly>
+                                                <script>
+                                                    document.getElementById("cantidad<?php echo $contador; ?>").addEventListener("keyup", CantidadPorUnitario);
+                                                    document.getElementById("cantidad<?php echo $contador; ?>").addEventListener("change", CantidadPorUnitario);
+                                                    document.getElementById("unitario<?php echo $contador; ?>").addEventListener("keyup", CantidadPorUnitario);
+                                                    document.getElementById("unitario<?php echo $contador; ?>").addEventListener("change", CantidadPorUnitario);
+
+                                                    function CantidadPorUnitario() {
+                                                        let cantidad = document.getElementById("cantidad<?php echo $contador; ?>");
+                                                        let unitario = document.getElementById("unitario<?php echo $contador; ?>");
+                                                        let total = document.getElementById("total<?php echo $contador; ?>");
+                                                        total.value = cantidad.value * unitario.value;
+                                                    }
+                                                </script>
+                                                <?php $contador++; ?>
+                                            <?php } else { ?>
+                                                <input type="<?php echo $tipodato; ?>" <?php if ($llave == "CANTIDAD") {
+                                                                                            echo 'id="cantidad' . $contador . '"';
+                                                                                        } elseif ($llave == "V_UNITARIO") {
+                                                                                            echo 'id="unitario' . $contador . '"';
+                                                                                        } ?> name="<?php echo $llave; ?>" value="<?php echo $dato; ?>">
+                                            <?php } ?>
                                 </th>
                             <?php endforeach; ?>
                             <td>

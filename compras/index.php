@@ -76,15 +76,15 @@ $proveedores = $conexion->query("SELECT * FROM proveedores")->fetchAll(PDO::FETC
                     </tr>
                     <tr>
                         <td>Cantidad</td>
-                        <td><input type="number" name="CANTIDAD" required></td>
+                        <td><input type="number" name="CANTIDAD" id="cantidad" value="0" required></td>
                     </tr>
                     <tr>
                         <td>Valor Unitario</td>
-                        <td><input type="number" name="V_UNITARIO" required></td>
+                        <td><input type="number" name="V_UNITARIO" id="unitario" value="0" required></td>
                     </tr>
                     <tr>
                         <td>Valor Total</td>
-                        <td><input type="number" name="TOTAL" required></td>
+                        <td><input type="number" name="TOTAL" id="total" value="0" readonly></td>
                     </tr>
         </div>
         <div>
@@ -99,4 +99,16 @@ $proveedores = $conexion->query("SELECT * FROM proveedores")->fetchAll(PDO::FETC
         </div>
     </div>
     <script><?php If(isset($mensaje)) {echo "alert('".$mensaje."');";} ?></script>
+    <script>
+        document.getElementById("cantidad").addEventListener("keyup", CantidadPorUnitario);
+        document.getElementById("cantidad").addEventListener("change", CantidadPorUnitario);
+        document.getElementById("unitario").addEventListener("keyup", CantidadPorUnitario);
+        document.getElementById("unitario").addEventListener("change", CantidadPorUnitario);
+        function CantidadPorUnitario() {
+            let cantidad = document.getElementById("cantidad");
+            let unitario = document.getElementById("unitario");
+            let total = document.getElementById("total");
+            total.value = cantidad.value * unitario.value;
+        }
+    </script>
 <?php include("../principal/abajo.php"); ?>
