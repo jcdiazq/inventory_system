@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="../css/estilo.css">
     <link rel="stylesheet" href="../css/listado.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <script type="text/javascript"  src="../js/html2pdf.bundle.min.js"></script>
+    <script src="../jspdf.min.js"></script>
+    <script src="../js/es6-promise.auto.min.js"></script>
+    <script src="../js/html2canvas.min.js"></script>
     <title>Sistema de Inventarios</title>
 </head>
 <body>
@@ -30,6 +34,7 @@
             <ul>
                 <li class="nivel1"><a class="opcion_inicio" href="/">Inicio</a>
                     <ul class="nivel2">
+                        <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/usuario.png"><br>Usuarios</a>
                             <ul class="nivel3">
                                 <li><a href="../usuarios">Crear Usuario</a></li>
@@ -43,12 +48,18 @@
                                 <li><a href="../roles/listar.php">Listar Roles</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+                        <?php if (isset($_SESSION['usuario'])) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/cliente.png"><br>Clientes</a>
                             <ul class="nivel3">
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../clientes">Crear Cliente</a></li>
+                                <?php } ?>
                                 <li><a href="../clientes/listar.php">Listar Clientes</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+                        <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/proveedor.png"><br>Proveedores</a>
                             <ul class="nivel3">
                                 <li><a href="../proveedores">Crear Proveedor</a></li>
@@ -61,36 +72,46 @@
                                 <li><a href="../compras/listar.php">Listar Compras</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+                        <?php if (isset($_SESSION['usuario'])) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/ventas.png"><br>Pedidos/Ventas</a>
                             <ul class="nivel3">
-                                <li><a href="../pedidos">Realizar Pedido</a></li>
+                                <li><a href="../pedidos">Crear Pedido</a></li>
                                 <li><a href="../pedidos/listar.php">Listar Pedidos</a></li>
                             </ul>
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/devolucion.png"><br>Devolución</a>
                             <ul class="nivel3">
+                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../devolucion">Crear Devolución</a></li>
+                                <?php } ?>
                                 <li><a href="../devolucion/listar.php">Listar Devoluciones</a></li>
                             </ul>
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/inventario.png"><br>Inventarios</a>
                             <ul class="nivel3">
+                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../inventario">Crear Inventarios</a></li>
+                                <?php } ?>
                                 <li><a href="../inventario/listar.php">Listar Inventarios</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+                        <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/materiales.png"><br>Materiales</a>
                             <ul class="nivel3">
                                 <li><a href="../materiales">Crear Material</a></li>
                                 <li><a href="../materiales/listar.php">Listar Materiales</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
                     </ul>
                 </li>
             </ul>
             </div>
             <div class="sesion">
-                <nav><ul>Cerrar</ul></nav>
+                <nav><ul><a href="../principal/abrirsession.php<?php if (isset($_SESSION['usuario'])) {echo "?cerrar=si";} ?>" style="text-decoration: none; color: #FFFFFF;">
+                <?php if (isset($_SESSION['usuario'])) {echo "Cerrar";} else {echo "Abrir";} ?></a></ul></nav>
             </div>
         </div>
     </div>

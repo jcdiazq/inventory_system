@@ -66,13 +66,17 @@ $registros = $conexion->query("select * FROM clientes")->fetchAll(PDO::FETCH_OBJ
                             <?php endforeach; ?>
                             <td>
                                 <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <input type="submit" name="actualizarclientes" id="actualizarclientes" value="Actualizar">
+                                <?php } ?>
                     </form>
                     </td>
                     <td>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
                             <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
+                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                             <input type="submit" name="eliminarclientes" id="eliminarclientes" value="Borrar">
+                            <?php } ?>
                         </form>
                     </td>
                     </tr>

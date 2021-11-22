@@ -44,14 +44,14 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
             </form>
         </div>
         <div class="iconos_exportar">
-            <div><img src="../img/icono_excel.png"></div>
-            <div><img src="../img/icono_pdf.png"></div>
-            <div><img src="../img/icono_imprimir.png"></div>
+            <div><img src="../img/icono_excel.png" onclick="exportTableToExcel('tblData')"></div>
+            <div><img src="../img/icono_pdf.png" onclick="exportTableToPdf('tblData')"></div>
+            <div><img src="../img/icono_imprimir.png" onclick="imprimir()"></div>
             <div><img src="../img/icono_correo.png"></div>
         </div>
     </div>
     <div class=registros>
-        <table class="tabla_lista">
+        <table class="tabla_lista" id="tblData">
             <thead class="tabla_encabezado">
                 <tr>
                     <?PHP foreach ($campos as $campo) : ?>
@@ -104,19 +104,30 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
                                         </select>
                                     <?php } else { ?>
                                         <?php if ($llave == "ID") {$valor = $dato;} ?>
+                                        <?php if ($llave == "CANT_DISPONIBLE") { 
+                                            if($dato<3) {$color="red";} elseif ($dato<10){$color="orange";} else {$color="green";} ?>
+                                            <span style="color:<?php echo $color; ?>;">
                                         <?php echo $dato; ?>
+                                            </spam>
+                                            <?php } else { ?>
+                                        <?php echo $dato; ?>
+                                        <?php } ?>
                                     <?php } ?>
                                 </th>
                             <?php endforeach; ?>
                             <td>
                                 <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <input type="submit" value="Actualizar">
+                                <?php } ?>
                     </form>
                     </td>
                     <td>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
                             <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
+                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                             <input type="submit" value="Borrar">
+                            <?php } ?>
                         </form>
                     </td>
                     </tr>
@@ -129,5 +140,69 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
     <?php if (isset($mensaje)) {
         echo "alert('" . $mensaje . "');";
     } ?>
+</script>
+<script>
+    // funcion para descargar el excel
+    function exportTableToExcel(tableID, filename = ''){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'exportado_excel.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
+
+// Funcion para descargar el PDF
+function exportTableToPdf(tableID, filename = ''){
+const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+html2pdf()
+    .set({
+        margin: 1,
+        filename: filename?filename+'.pdf':'exportado_pdf.pdf',
+        image: {
+            type: 'jpeg',
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 3, // A mayor escala, mejores gráficos, pero más peso
+            letterRendering: true,
+        },
+        jsPDF: {
+            unit: "in",
+            format: "a3",
+            orientation: 'portrait' // landscape o portrait
+        }
+    })
+    .from($elementoParaConvertir)
+    .save()
+    .catch(err => console.log(err));
+}
+
+// Funcion para enviar a imprimir
+function imprimir() {
+    window.print()
+}
 </script>
 <?php include("../principal/abajo.php"); ?>

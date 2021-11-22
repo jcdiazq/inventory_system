@@ -15,20 +15,24 @@ die ('ERROR: '.$e ->getMessage());
 echo  "Linea del error" . $e->getLine();
 }
 
+//iniciar la session
+session_start();
+
 // Cookies para almacenar de los productos seleccionados para comprar
 if (isset($_POST["comprar"])){
-    $objecto = ["ID"=>$_POST["ID"],"DESCRIPCION"=>$_POST["DESCRIPCION"],"COLOR"=>$_POST["COLOR"],
+    $objecto = ["ID"=>$_POST["ID"],"DESCRIPCION"=>$_POST["DESCRIPCION"],"COLOR"=>$_POST["COLOR"],"CODIGO"=>$_POST["CODIGO"],
     "MARCA"=>$_POST["MARCA"],"REFERENCIA"=>$_POST["REFERENCIA"],"GARANTIA"=>$_POST["GARANTIA"],
-    "CANTIDAD_COMPRAR"=>1,"V_UNITARIO"=>$_POST["V_UNITARIO"]];
+    "CANTIDAD_COMPRAR"=>1,"V_UNITARIO"=>$_POST["V_UNITARIO"],"TOTAL"=>$_POST["V_UNITARIO"]];
     $existe=false;
     if (isset($_COOKIE["productos"])) {
         $array_productos = json_decode($_COOKIE["productos"]);
         foreach ($array_productos as $dato) :
-            if ($dato->ID==$_POST["ID"] && $dato->CANTIDAD_COMPRAR<$_POST["CANT_DISPONIBLE"]) {
+            if ($dato->ID==$_POST["ID"]) {
                 $existe=true;
-                $dato->CANTIDAD_COMPRAR++;
-            } else {
-                $existe=true;
+                if ($dato->CANTIDAD_COMPRAR<$_POST["CANT_DISPONIBLE"]) {
+                    $dato->CANTIDAD_COMPRAR++;
+                    $dato->TOTAL=$dato->CANTIDAD_COMPRAR*$_POST["V_UNITARIO"];
+                }
             }
         endforeach;
     }
@@ -43,7 +47,7 @@ if (isset($_POST["comprar"])){
 }
 
 // Limpiar la Cookies
-if (isset($_POST["limpiar_comprar"])){
+if (isset($_POST["limpiar_pedido"]) || isset($_POST["finalizar_pedido"])){
     setcookie("productos", "", time() - 3600);
     $productos=[];
 }

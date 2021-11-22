@@ -1,32 +1,38 @@
 <?PHP
 
 include("../principal/arriba.php");
-
-$registros = $conexion->query("SELECT inventario.ID, inventario.DESCRIPCION, inventario.COLOR, inventario.MARCA, inventario.REFERENCIA, inventario.GARANTIA, inventario.CANT_DISPONIBLE, 
+$sqlinventario = "SELECT inventario.ID, inventario.DESCRIPCION, inventario.COLOR, inventario.CODIGO, inventario.MARCA, inventario.REFERENCIA, inventario.GARANTIA, inventario.CANT_DISPONIBLE, 
 (SELECT V_UNITARIO FROM compras WHERE compras.ID = inventario.N_COMPRAS) AS V_UNITARIO
-FROM inventario WHERE inventario.CANT_DISPONIBLE>0")->fetchAll(PDO::FETCH_OBJ);
+FROM inventario WHERE inventario.CANT_DISPONIBLE>0";
+$registros = $conexion->query($sqlinventario)->fetchAll(PDO::FETCH_OBJ);
 
-$campos = $registros[0];
-
-if (isset($_POST["crear"])) {
-    $sql = "INSERT INTO pedidos
+if (isset($_POST["finalizar_pedido"])) {
+    $sql="INSERT INTO inventarios.pedidos
     (FECHA_PEDIDO, CLIENTE, CODIGO, CODIGO_BARRAS, DESCRIPCION, COLOR, MARCA, REFERENCIA, GARANTIA, CANTIDAD, V_UNITARIO, TOTAL)
-    VALUES(:FECHA_PEDIDO,:CLIENTE,:CODIGO,:CODIGO_BARRAS,:DESCRIPCION,:COLOR,:MARCA,:REFERENCIA,:GARANTIA,:CANTIDAD,:V_UNITARIO, :TOTAL)";
+    VALUES(:FECHA_PEDIDO, :CLIENTE, :CODIGO, :CODIGO_BARRAS, :DESCRIPCION, :COLOR, :MARCA, :REFERENCIA, :GARANTIA, :CANTIDAD, :V_UNITARIO, :TOTAL)";
 
+    $fecha=date("d/m/y");
     $resultado = $conexion->prepare($sql);
     $resultado->execute(array(
-        ":PEDIDO" => $_POST["PEDIDO"], ":FECHA_PEDIDO" => $_POST["FECHA_PEDIDO"], ":CODIGO" => $_POST["CODIGO"],
+        ":FECHA_PEDIDO" => $fecha, ":CLIENTE" =>$_SESSION['ID'], ":CODIGO" => $_POST["CODIGO"],
         ":CODIGO_BARRAS" => $_POST["CODIGO_BARRAS"], ":DESCRIPCION" => $_POST["DESCRIPCION"], ":COLOR" => $_POST["COLOR"], ":MARCA" => $_POST["MARCA"],
-        ":REFERENCIA" => $_POST["REFERENCIA"], ":GARANTIA" => $_POST["GARANTIA"], ":CANTIDAD" => $_POST["CANTIDAD"], ":V_UNITARIO" => $_POST["V_UNITARIO"],
+        ":REFERENCIA" => $_POST["REFERENCIA"], ":GARANTIA" => $_POST["GARANTIA"], ":CANTIDAD" => $_POST["CANTIDAD_COMPRAR"], ":V_UNITARIO" => $_POST["V_UNITARIO"],
         ":TOTAL" => $_POST["TOTAL"]
     ));
-    $mensaje = "Registrado Ok";
+
+    $id = $conexion->lastInsertId();
+    $mensaje = "Pedido Registrado";
+
+    foreach ($registros as $valor):
+        if ($valor->ID == $_POST["ID"]) {$cantidad = $valor->CANT_DISPONIBLE-$_POST["CANTIDAD_COMPRAR"];}
+    endforeach;
+
+    $sql = "UPDATE inventario SET N_PEDIDO=$id, CANT_DISPONIBLE=$cantidad WHERE ID='{$_POST["ID"]}'";
+    $resultado = $conexion->prepare($sql);
+    $resultado->execute();
+    $registros = $conexion->query($sqlinventario)->fetchAll(PDO::FETCH_OBJ);
 }
-
-$materiales = $conexion->query("SELECT * FROM materiales")->fetchAll(PDO::FETCH_OBJ);
-$clientes = $conexion->query("SELECT * FROM clientes")->fetchAll(PDO::FETCH_OBJ);
-$inventarios = $conexion->query("SELECT * FROM inventario WHERE CANT_DISPONIBLE>0")->fetchAll(PDO::FETCH_OBJ);
-
+$campos = $registros[0];
 ?>
 <div class="contenedor_listado">
     <div class=titulo_pagina>
@@ -77,7 +83,7 @@ $inventarios = $conexion->query("SELECT * FROM inventario WHERE CANT_DISPONIBLE>
                         foreach ($campos as $llave => $dato) : ?>
                             <th><?php echo $llave; ?></th>
                         <?php endforeach; ?>
-                        <th colspan="2">Comprar</th>
+                        <th>CODIGO DE BARRAS</th>
                     </tr>
                 </thead>
                 <tbody class="tabla_cuerpo">
@@ -86,21 +92,17 @@ $inventarios = $conexion->query("SELECT * FROM inventario WHERE CANT_DISPONIBLE>
                             <tr class="tabla_fila">
                                 <?PHP foreach ($registro as $llave => $dato) : ?>
                                     <th>
-                                        <?php if ($llave == "ID") {
-                                            $valor = $dato;
-                                        } else { ?>
-                                        <?php echo $dato;
-                                        } ?>
+                                        <?php if ($llave == "ID") { $valor = $dato; } echo $dato; ?>
                                         <input type="hidden" name="<?php echo $llave ?>" id="<?php echo $llave ?>" value="<?php echo $dato; ?>">
                                     </th>
                                 <?php endforeach; ?>
                                 <td>
-                                    <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
+                                    <input type="text" name="CODIGO_BARRAS" value="">
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                        <input type="submit" name="comprar" value="Finalizar">
-                        <input type="submit" name="limpiar_comprar" value="Limpiar Comprar">
+                        <input type="submit" name="finalizar_pedido" value="Finalizar Pedido">
+                        <input type="submit" name="limpiar_pedido" value="Limpiar Pedido">
                         </form>
                 </tbody>
             </table>
