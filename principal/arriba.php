@@ -63,7 +63,7 @@
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/ventas.png"><br>Pedidos/Ventas</a>
                             <ul class="nivel3">
-                                <li><a href="../pedidos">Crear Pedido</a></li>
+                                <li><a href="../pedidos">Realizar Pedido</a></li>
                                 <li><a href="../pedidos/listar.php">Listar Pedidos</a></li>
                             </ul>
                         </li>
