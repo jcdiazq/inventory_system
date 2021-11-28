@@ -2,7 +2,7 @@
 
 if(isset($_POST["cambiar"])){
     if($_POST["usuario"] == $_POST["contraseña"]) {
-        $sql = "UPDATE usuarios SET CONTRASEÑA={$_POST["contraseña"]} WHERE ID={$_POST["ID"]}";
+        $sql = "UPDATE usuarios SET CONTRASEÑA='{$_POST["contraseña"]}' WHERE ID='{$_POST["ID"]}'";
         $resultado = $conexion->prepare($sql);
         $resultado->execute();
         $mensaje = "Actualizado OK";
@@ -21,9 +21,9 @@ if(isset($_POST["cambiar"])){
             <div class="caja_credencial_arriba"></div>
             <div>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <input type="hidden" name="id" value="">
-                    <div class="caja_credencial_input">Nueva Contraseña<input type="text" name="usuario"></div>
-                    <div class="caja_credencial_input">Confirmar Contraseña<input type="text" name="contraseña"></div>
+                    <input type="hidden" name="ID" value="<?php echo $_SESSION['ID']; ?>">
+                    <div class="caja_credencial_input">Nueva Contraseña<input type="password" name="usuario" oninvalid="this.setCustomValidity('Ingresar Una Nueva Contraseña')" oninput="this.setCustomValidity('')" required></div>
+                    <div class="caja_credencial_input">Confirmar Contraseña<input type="password" name="contraseña" oninvalid="this.setCustomValidity('Ingresar Una Contraseña a Confirmar')" oninput="this.setCustomValidity('')" required></div>
                     <div class="caja_credencial_submit"><input type="reset" Value="Cancelar">
                     <input type="submit" name="cambiar" Value="Aceptar"></div>
                 </form>

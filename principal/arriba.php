@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="../css/estilo.css">
     <link rel="stylesheet" href="../css/listado.css">
     <link rel="stylesheet" href="../css/menu.css">
-    <script type="text/javascript"  src="../js/html2pdf.bundle.min.js"></script>
-    <script src="../jspdf.min.js"></script>
+    <script src="../js/html2pdf.bundle.min.js"></script>
+    <script src="../js/jspdf.min.js"></script>
     <script src="../js/es6-promise.auto.min.js"></script>
     <script src="../js/html2canvas.min.js"></script>
     <title>Sistema de Inventarios</title>
@@ -22,7 +22,7 @@
 <div class="encabezado">
         <div class="encabezado_titulo_logo">
             <div class="titulo">
-                <span class="titulo_texto">Sistema de Inventarios</span>
+                <span class="titulo_texto">Sistema de Inventarios </span>
             </div>
             <div class="logo">
                 <img src="../img/distribuidora.png">
@@ -52,9 +52,7 @@
                         <?php if (isset($_SESSION['usuario'])) { ?>
                         <li class="nivel2"><a href="#"><img src="../img/cliente.png"><br>Clientes</a>
                             <ul class="nivel3">
-                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../clientes">Crear Cliente</a></li>
-                                <?php } ?>
                                 <li><a href="../clientes/listar.php">Listar Clientes</a></li>
                             </ul>
                         </li>
@@ -82,17 +80,13 @@
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/devolucion.png"><br>Devolución</a>
                             <ul class="nivel3">
-                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../devolucion">Crear Devolución</a></li>
-                                <?php } ?>
                                 <li><a href="../devolucion/listar.php">Listar Devoluciones</a></li>
                             </ul>
                         </li>
                         <li class="nivel2"><a href="#"><img src="../img/inventario.png"><br>Inventarios</a>
                             <ul class="nivel3">
-                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
                                 <li><a href="../inventario">Crear Inventarios</a></li>
-                                <?php } ?>
                                 <li><a href="../inventario/listar.php">Listar Inventarios</a></li>
                             </ul>
                         </li>

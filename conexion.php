@@ -17,6 +17,12 @@ echo  "Linea del error" . $e->getLine();
 
 //iniciar la session
 session_start();
+// echo $_SERVER['PHP_SELF'];
+
+//Validar si la sesión esta activa o redireccionar a inciar sesión
+if (!isset($_SESSION['ID']) and $_SERVER['PHP_SELF'] != "/principal/abrirsession.php") {
+    header("Location:../principal/abrirsession.php");
+}
 
 // Cookies para almacenar de los productos seleccionados para comprar
 if (isset($_POST["comprar"])){

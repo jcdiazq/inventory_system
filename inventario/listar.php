@@ -37,9 +37,9 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
         <div class="caja_filtro">
             <form action="" method="get">
                 Filtrar Por: <select name="filtro" id="filtro">
-                                <option value="filtro1">Filtro 1</option>
-                                <option value="filtro2">Filtro 2</option>
-                            </select>
+                    <option value="filtro1">Filtro 1</option>
+                    <option value="filtro2">Filtro 2</option>
+                </select>
                 <input type="submit" name="filtrar" value="Aceptar">
             </form>
         </div>
@@ -47,7 +47,7 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
             <div><img src="../img/icono_excel.png" onclick="exportTableToExcel('tblData')"></div>
             <div><img src="../img/icono_pdf.png" onclick="exportTableToPdf('tblData')"></div>
             <div><img src="../img/icono_imprimir.png" onclick="imprimir()"></div>
-            <div><img src="../img/icono_correo.png"></div>
+            <div><img src="../img/icono_correo.png" onclick="enviarcorreo()"><input type="email" id="direccion" placeholder="Ingrese Un Correo"></div>
         </div>
     </div>
     <div class=registros>
@@ -71,8 +71,8 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
                                             <option value="NULL">NULL</option>
                                             <?PHP foreach ($compras as $compra) : ?>
                                                 <option value="<?php echo $compra->ID; ?>" <?php if ($dato == $compra->ID) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $compra->DESCRIPCION; ?></option>
+                                                                                                echo "selected";
+                                                                                            } ?>><?php echo $compra->DESCRIPCION; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     <?php } elseif ($llave == "N_PEDIDO") { ?>
@@ -80,8 +80,8 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
                                             <option value="NULL">NULL</option>
                                             <?PHP foreach ($pedidos as $pedido) : ?>
                                                 <option value="<?php echo $pedido->ID; ?>" <?php if ($dato == $pedido->ID) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $pedido->DESCRIPCION; ?></option>
+                                                                                                echo "selected";
+                                                                                            } ?>><?php echo $pedido->DESCRIPCION; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     <?php } elseif ($llave == "N_DEVOLUCION") { ?>
@@ -89,8 +89,8 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
                                             <option value="NULL">NULL</option>
                                             <?PHP foreach ($devoluciones as $devolucion) : ?>
                                                 <option value="<?php echo $devolucion->ID; ?>" <?php if ($dato == $devolucion->ID) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $devolucion->DESCRIPCION; ?></option>
+                                                                                                    echo "selected";
+                                                                                                } ?>><?php echo $devolucion->DESCRIPCION; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     <?php } elseif ($llave == "CODIGO") { ?>
@@ -98,35 +98,43 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
                                             <option value="NULL">NULL</option>
                                             <?PHP foreach ($materiales as $material) : ?>
                                                 <option value="<?php echo $material->IDMATERIAL; ?>" <?php if ($dato == $material->IDMATERIAL) {
-                                                                                            echo "selected";
-                                                                                        } ?>><?php echo $material->DESCRIPCION; ?></option>
+                                                                                                            echo "selected";
+                                                                                                        } ?>><?php echo $material->DESCRIPCION; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     <?php } else { ?>
-                                        <?php if ($llave == "ID") {$valor = $dato;} ?>
-                                        <?php if ($llave == "CANT_DISPONIBLE") { 
-                                            if($dato<3) {$color="red";} elseif ($dato<10){$color="orange";} else {$color="green";} ?>
+                                        <?php if ($llave == "ID") {
+                                            $valor = $dato;
+                                        } ?>
+                                        <?php if ($llave == "CANT_DISPONIBLE") {
+                                            if ($dato < 3) {
+                                                $color = "red";
+                                            } elseif ($dato < 10) {
+                                                $color = "orange";
+                                            } else {
+                                                $color = "green";
+                                            } ?>
                                             <span style="color:<?php echo $color; ?>;">
-                                        <?php echo $dato; ?>
-                                            </spam>
+                                                <?php echo $dato; ?>
+                                                </spam>
                                             <?php } else { ?>
-                                        <?php echo $dato; ?>
+                                                <?php echo $dato; ?>
+                                            <?php } ?>
                                         <?php } ?>
-                                    <?php } ?>
                                 </th>
                             <?php endforeach; ?>
                             <td>
                                 <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
-                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
-                                <input type="submit" value="Actualizar">
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1) { ?>
+                                    <input type="submit" value="Actualizar">
                                 <?php } ?>
                     </form>
                     </td>
                     <td>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
                             <input type="hidden" name="ID" id="ID" value="<?php echo $valor; ?>">
-                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1 ) { ?>
-                            <input type="submit" value="Borrar">
+                            <?php if (isset($_SESSION['usuario']) && $_SESSION['ID_ROL'] == 1) { ?>
+                                <input type="submit" value="Borrar">
                             <?php } ?>
                         </form>
                     </td>
@@ -143,66 +151,87 @@ $materiales = $conexion->query("select * FROM materiales")->fetchAll(PDO::FETCH_
 </script>
 <script>
     // funcion para descargar el excel
-    function exportTableToExcel(tableID, filename = ''){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-    
-    // Specify file name
-    filename = filename?filename+'.xls':'exportado_excel.xls';
-    
-    // Create download link element
-    downloadLink = document.createElement("a");
-    
-    document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-    
-        // Setting the file name
-        downloadLink.download = filename;
-        
-        //triggering the function
-        downloadLink.click();
-    }
-}
+    function exportTableToExcel(tableID, filename = '') {
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
-// Funcion para descargar el PDF
-function exportTableToPdf(tableID, filename = ''){
-const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-html2pdf()
-    .set({
-        margin: 1,
-        filename: filename?filename+'.pdf':'exportado_pdf.pdf',
-        image: {
-            type: 'jpeg',
-            quality: 0.98
-        },
-        html2canvas: {
-            scale: 3, // A mayor escala, mejores gráficos, pero más peso
-            letterRendering: true,
-        },
-        jsPDF: {
-            unit: "in",
-            format: "a3",
-            orientation: 'portrait' // landscape o portrait
+        // Specify file name
+        filename = filename ? filename + '.xls' : 'exportado_excel.xls';
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+            // Setting the file name
+            downloadLink.download = filename;
+
+            //triggering the function
+            downloadLink.click();
         }
-    })
-    .from($elementoParaConvertir)
-    .save()
-    .catch(err => console.log(err));
-}
+    }
 
-// Funcion para enviar a imprimir
-function imprimir() {
-    window.print()
-}
+    // Funcion para descargar el PDF
+    function exportTableToPdf(tableID, filename = '') {
+        const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
+        html2pdf()
+            .set({
+                margin: 1,
+                filename: filename ? filename + '.pdf' : 'exportado_pdf.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+                    letterRendering: true,
+                },
+                jsPDF: {
+                    unit: "in",
+                    format: "a3",
+                    orientation: 'portrait' // landscape o portrait
+                }
+            })
+            .from($elementoParaConvertir)
+            .save()
+            .catch(err => console.log(err));
+    }
+
+    // Funcion para enviar a imprimir
+    function imprimir() {
+        window.print()
+    }
+
+    function enviarcorreo() {
+        var direccion = document.getElementById('direccion').value;
+        var tabla = document.getElementById('tblData').innerHTML;
+        if (direccion == "") {
+            alert("Debe Ingresar Un Correo Valido");
+        } else {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'enviarcorreo.php', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    alert('Correo fue Enviado');
+                }
+            }
+            xhr.send('CORREO=CORREO&DIRECCION=' + direccion + '&TABLA=' + tabla);
+        }
+    }
 </script>
 <?php include("../principal/abajo.php"); ?>

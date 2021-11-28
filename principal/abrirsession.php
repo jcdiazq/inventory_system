@@ -32,8 +32,8 @@ if(isset($_POST["entrar"])){
             <div class="caja_credencial_arriba"></div>
             <div>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <div class="caja_credencial_input">Usuario<input type="text" name="usuario"></div>
-                    <div class="caja_credencial_input">Contraseña<input type="text" name="contraseña"></div>
+                    <div class="caja_credencial_input">Usuario<input type="text" name="usuario" required oninvalid="this.setCustomValidity('Ingresar Un Usuario')" oninput="this.setCustomValidity('')"></div>
+                    <div class="caja_credencial_input">Contraseña<input type="password" name="contraseña" required oninvalid="this.setCustomValidity('Ingresar Una Contraseña')" oninput="this.setCustomValidity('')"></div>
                     <div class="caja_credencial_submit"><input type="submit" name="entrar" Value="Enviar">
                     <input type="reset" Value="Limpiar"></div>
                 </form>
