@@ -8,6 +8,8 @@ if(isset($_POST["entrar"])){
         $_SESSION['usuario']=$usuario->USUARIO;
         $_SESSION['ID_ROL']=$usuario->ID_ROL;
         $_SESSION['ID']=$usuario->ID;
+        $rol = $conexion->query("select * FROM roles WHERE ID='{$usuario->ID_ROL}'")->fetch(PDO::FETCH_OBJ);
+        $_SESSION['ROL']=$rol->ROL;
         echo "<meta http-equiv='refresh' content='0;url=../'/>";
     }else{
         $mensaje = "Las credenciales no son validas";

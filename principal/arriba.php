@@ -27,6 +27,11 @@
             <div class="logo">
                 <img src="../img/distribuidora.png">
             </div>
+            <?php 
+            if (isset($_SESSION['ID'])) {
+                echo "<h5>Usuario: {$_SESSION['usuario']} - Perfil: {$_SESSION['ROL']}</h5>";
+            }
+            ?>
         </div>
         <!-- Menu Navegación-->
         <div class="navegacion">
